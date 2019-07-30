@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # local
     'shoppinglist.apps.ShoppinglistConfig',
+
+    # third party
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
