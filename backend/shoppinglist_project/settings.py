@@ -42,9 +42,21 @@ INSTALLED_APPS = [
 
     # third party
     'rest_framework',
+    'corsheaders',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # to change
+
+    ]
+
+}
+
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # CORS
+    'django.middleware.common.CommonMiddleware',  # CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +65,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000'
+)
 
 ROOT_URLCONF = 'shoppinglist_project.urls'
 
