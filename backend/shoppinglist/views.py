@@ -5,6 +5,6 @@ from .models import Item
 
 from .serializers import ItemSerializer
 
-class ListItem(generics.ListAPIView):
+class ListItem(generics.ListCreateAPIView):
 	queryset = Item.objects.all()
 	serializer_class = ItemSerializer

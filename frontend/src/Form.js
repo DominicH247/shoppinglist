@@ -1,55 +1,49 @@
-import React, {Component} from 'react';
+import React, {useState, useContext} from 'react';
 
-class Form extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.initialState = {
-            first: '',
-            last: ''
-        };
 
-        this.state = this.initialState;
-    }
+const AddItem = () => { 
+    // Form state
+    const [newItem, setNewItem] = useState('');
+    const [auth, added_by] = useState('');
+    // const [item, setItems] = useContext(ShoppingContext);
+    
+    //form state handler
+    const handleChange = (e) => {
+        setNewItem(e.target.value);
+    };
 
-    handleChange = event => {
-        const { name, value } = event.target;
+    // submit form data to API as JSON and reset state
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = newItem
+        fetch('http://localhost:8000/api/v1/',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({item_name:data}),
+        })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        setNewItem('')  
+    };
 
-        this.setState({
-            [name] : value
-        });
-    }
 
-    onFormSubmit = (event) => {
-        event.preventDefault();
-        
-        this.props.handleSubmit(this.state);
-        this.setState(this.initialState);
-    }
 
-    render() {
-        const { first, last } = this.state; 
-
-        return (
-            <form onSubmit={this.onFormSubmit}>
-                <label>first name</label>
-                <input 
-                    type="text" 
-                    name="first" 
-                    value={first} 
-                    onChange={this.handleChange} />
-                <label>last name</label>
-                <input 
-                    type="text" 
-                    name="last" 
-                    value={last} 
-                    onChange={this.handleChange} />
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        );
-    }
+    return(
+        <form onSubmit={handleSubmit}>
+            <label>Item</label>
+            <input 
+                type="text" 
+                name="newItem" 
+                value={newItem} 
+                onChange={handleChange} />
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    );
 }
 
-export default Form;
+export default AddItem;

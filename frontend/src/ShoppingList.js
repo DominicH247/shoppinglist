@@ -10,7 +10,7 @@ const ShoppingList = () => {
 		<div className='shopping-list'>
 			{items.map(item =>(
        		 	<Item item_name = {item.item_name} added_by={item.added_by} key={item.id} />
-       		 ))};
+       		 ))}
 		</div>
 
 	)
